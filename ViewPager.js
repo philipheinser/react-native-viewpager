@@ -12,6 +12,7 @@ var {
   PanResponder,
   Animated,
   StyleSheet,
+  Platform,
 } = ReactNative;
 
 var StaticRenderer = require('react-native/Libraries/Components/StaticRenderer');
@@ -92,9 +93,9 @@ var ViewPager = React.createClass({
     this._panResponder = PanResponder.create({
       // Claim responder if it's a horizontal pan
       onMoveShouldSetPanResponder: (e, gestureState) => {
-        if (gestureState.numberActiveTouches === 2 && Math.abs(gestureState.dx) > Math.abs(gestureState.dy)) {
-          if (/* (gestureState.moveX <= this.props.edgeHitWidth ||
-              gestureState.moveX >= deviceWidth - this.props.edgeHitWidth) && */
+        if (Math.abs(gestureState.dx) > 4 && Math.abs(gestureState.dx) > Math.abs(gestureState.dy)) {
+          if ((Platform.OS === 'android' || gestureState.moveX > 25 ) && (gestureState.moveX <= this.props.edgeHitWidth ||
+              gestureState.moveX >= deviceWidth - this.props.edgeHitWidth) &&
                 this.props.locked !== true && !this.fling) {
             this.props.hasTouch && this.props.hasTouch(true);
             return true;
