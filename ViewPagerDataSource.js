@@ -2,22 +2,18 @@
 
 //var warning = require('warning');
 
-function defaultGetPageData(
-  dataBlob: any,
-  pageID: number | string,
-): any {
+function defaultGetPageData(dataBlob: any, pageID: number | string): any {
   return dataBlob[pageID];
 }
 
-type differType = (data1: any, data2: any) => bool;
+type differType = (data1: any, data2: any) => boolean;
 
 type ParamType = {
-  pageHasChanged: differType;
-  getPageData: ?typeof defaultGetPageData;
-}
+  pageHasChanged: differType,
+  getPageData: ?typeof defaultGetPageData,
+};
 
 class ViewPagerDataSource {
-
   constructor(params: ParamType) {
     this._getPageData = params.getPageData || defaultGetPageData;
     this._pageHasChanged = params.pageHasChanged;
@@ -26,10 +22,9 @@ class ViewPagerDataSource {
   }
 
   cloneWithPages(
-      dataBlob: any,
-      pageIdentities: ?Array<string>,
+    dataBlob: any,
+    pageIdentities: ?Array<string>
   ): ViewPagerDataSource {
-
     var newSource = new ViewPagerDataSource({
       getPageData: this._getPageData,
       pageHasChanged: this._pageHasChanged,
@@ -44,10 +39,7 @@ class ViewPagerDataSource {
     }
 
     newSource._cachedPageCount = newSource.pageIdentities.length;
-    newSource._calculateDirtyPages(
-      this._dataBlob,
-      this.pageIdentities
-    );
+    newSource._calculateDirtyPages(this._dataBlob, this.pageIdentities);
     return newSource;
   }
 
@@ -58,7 +50,7 @@ class ViewPagerDataSource {
   /**
    * Returns if the row is dirtied and needs to be rerendered
    */
-  pageShouldUpdate(pageIndex: number): bool {
+  pageShouldUpdate(pageIndex: number): boolean {
     var needsUpdate = this._dirtyPages[pageIndex];
     //    warning(needsUpdate !== undefined,
     //  'missing dirtyBit for section, page: ' + pageIndex);
@@ -75,7 +67,7 @@ class ViewPagerDataSource {
     var pageID = this.pageIdentities[pageIndex];
     //    warning(pageID !== undefined,
     //      'renderPage called on invalid section: ' + pageID);
-    return this._getPageData(this._dataBlob,pageID);
+    return this._getPageData(this._dataBlob, pageID);
   }
 
   /**
@@ -86,15 +78,12 @@ class ViewPagerDataSource {
   _pageHasChanged: differType;
 
   _dataBlob: any;
-  _dirtyPages: Array<bool>;
+  _dirtyPages: Array<boolean>;
   _cachedRowCount: number;
 
   pageIdentities: Array<string>;
 
-  _calculateDirtyPages(
-    prevDataBlob: any,
-    prevPageIDs: Array<string>,
-  ): void {
+  _calculateDirtyPages(prevDataBlob: any, prevPageIDs: Array<string>): void {
     // construct a hashmap of the existing (old) id arrays
     var prevPagesHash = keyedDictionaryFromArray(prevPageIDs);
     this._dirtyPages = [];
@@ -103,7 +92,7 @@ class ViewPagerDataSource {
     for (var sIndex = 0; sIndex < this.pageIdentities.length; sIndex++) {
       var pageID = this.pageIdentities[sIndex];
       dirty = !prevPagesHash[pageID];
-      var pageHasChanged = this._pageHasChanged
+      var pageHasChanged = this._pageHasChanged;
       if (!dirty && pageHasChanged) {
         dirty = pageHasChanged(
           this._getPageData(prevDataBlob, pageID),
@@ -113,7 +102,6 @@ class ViewPagerDataSource {
       this._dirtyPages.push(!!dirty);
     }
   }
-
 }
 
 function keyedDictionaryFromArray(arr) {
