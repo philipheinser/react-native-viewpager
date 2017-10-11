@@ -21,9 +21,8 @@ var deviceWidth = Dimensions.get('window').width;
 var ViewPagerDataSource = require('./ViewPagerDataSource');
 
 class ViewPager extends React.Component {
-  statics: {
-    DataSource: ViewPagerDataSource,
-  };
+  
+  static const DataSource = ViewPagerDataSource;
 
   propTypes: {
     ...View.propTypes,
