@@ -50,6 +50,16 @@ class ViewPager extends React.Component {
       },
     };
   }
+    
+    constructor() {
+     super()
+      
+      this.state = {
+      currentPage: 0,
+      viewWidth: 0,
+      scrollValue: new Animated.Value(0),
+    }
+    }
 
   getInitialState() {
     return {
