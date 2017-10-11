@@ -22,7 +22,7 @@ var ViewPagerDataSource = require('./ViewPagerDataSource');
 
 class ViewPager extends React.Component {
   
-  static const DataSource = ViewPagerDataSource;
+  static DataSource = ViewPagerDataSource;
 
   propTypes: {
     ...View.propTypes,
