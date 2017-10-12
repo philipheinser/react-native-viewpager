@@ -37,29 +37,27 @@ class ViewPager extends React.Component {
 
   fling: false;
 
-  getDefaultProps() {
-    return {
-      isLoop: false,
-      locked: false,
-      animation: function(animate, toValue, gs) {
-        return Animated.spring(animate, {
-          toValue: toValue,
-          friction: 10,
-          tension: 50,
-        });
-      },
-    };
-  }
+  static defaultProps = {
+    isLoop: false,
+    locked: false,
+    animation: function(animate, toValue, gs) {
+      return Animated.spring(animate, {
+        toValue: toValue,
+        friction: 10,
+        tension: 50,
+      });
+    },
+  };
     
-    constructor() {
-     super()
+  constructor() {
+    super()
       
-      this.state = {
+    this.state = {
       currentPage: 0,
       viewWidth: 0,
       scrollValue: new Animated.Value(0),
     }
-    }
+  }
 
   getInitialState() {
     return {
